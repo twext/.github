@@ -1,4 +1,4 @@
-name: Sync Organization Labels
+name: Sync Labels Across Repositories
 
 on:
   push:
@@ -6,20 +6,25 @@ on:
       - main
     paths:
       - ".github/labels.yml"
+      - ".github/workflows/label-sync.yml"
   workflow_dispatch:
 
 jobs:
   label-sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Sync Labels to Public Repos
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Sync labels to public repositories
         env:
-          # actionlint-disable-next-line expression
-          GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
-          ORG_NAME: ${{ github.repository_owner }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORG_NAME: twext
         run: |
           # Fetch all public, unarchived repository names
           REPOS=$(gh api --paginate "orgs/${ORG_NAME}/repos?type=public" --jq '.[] | select(.archived == false) | .name')
@@ -29,6 +34,6 @@ jobs:
             npx github-label-sync \
               --access-token "$GH_TOKEN" \
               --labels .github/labels.yml \
-              --allow-added-labels false \
+              --no-allow-added-labels \
               "${ORG_NAME}/${REPO}"
           done
