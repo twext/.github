@@ -15,9 +15,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run Label Sync across Org
-        uses: EndBug/label-sync@v2
-        with:
-          config-file: ".github/labels.yml"
-          token: ${{ secrets.ORG_ADMIN_TOKEN }}
-          delete-other-labels: false
+      - name: Sync Labels to Public Repos
+        env:
+          # actionlint-disable-next-line expression
+          GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+          ORG_NAME: ${{ github.repository_owner }}
+        run: |
+          # Fetch all public, unarchived repository names
+          REPOS=$(gh api --paginate "orgs/${ORG_NAME}/repos?type=public" --jq '.[] | select(.archived == false) | .name')
+
+          for REPO in $REPOS; do
+            echo "Syncing labels for public repository: ${REPO}..."
+            npx github-label-sync \
+              --access-token "$GH_TOKEN" \
+              --labels .github/labels.yml \
+              --allow-added-labels false \
+              "${ORG_NAME}/${REPO}"
+          done
