@@ -1,0 +1,23 @@
+name: Sync Organization Labels
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/labels.yml"
+  workflow_dispatch:
+
+jobs:
+  label-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Label Sync across Org
+        uses: EndBug/label-sync@v2
+        with:
+          config-file: ".github/labels.yml"
+          token: ${{ secrets.ORG_ADMIN_TOKEN }}
+          delete-other-labels: false

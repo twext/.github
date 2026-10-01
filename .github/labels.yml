@@ -1,0 +1,83 @@
+- name: "type: bug"
+  color: "d73a4a"
+  description: "Something isn't working or throwing uncaught exceptions"
+
+- name: "type: feature"
+  color: "a2eeef"
+  description: "New functionality or feature request"
+
+- name: "type: enhancement"
+  color: "84b6eb"
+  description: "Improvement to existing feature or performance"
+
+- name: "type: refactor"
+  color: "7057ff"
+  description: "Code restructuring without changing functional behavior"
+
+- name: "type: docs"
+  color: "0075ca"
+  description: "Documentation updates, README, or JSDoc improvements"
+
+- name: "type: security"
+  color: "b60205"
+  description: "Vulnerability reports, audit findings, or security fixes"
+
+- name: "domain: node"
+  color: "027300"
+  description: "Node.js runtime, event loop, async, or V8 issues"
+
+- name: "domain: npm"
+  color: "cb3837"
+  description: "Package dependencies, scripts, lockfiles, or publishing"
+
+- name: "domain: docker"
+  color: "1d63ed"
+  description: "Dockerfile, container runtime, compose, or image builds"
+
+- name: "domain: ci/cd"
+  color: "5319e7"
+  description: "GitHub Actions, build pipelines, or release automation"
+
+- name: "domain: config"
+  color: "fbca04"
+  description: "Environment variables, .env, or build tool config"
+
+- name: "status: triage"
+  color: "fef2c0"
+  description: "Needs initial review or investigation"
+
+- name: "status: needs-repro"
+  color: "d4c5f9"
+  description: "Awaiting reproducible sample or minimal repo"
+
+- name: "status: blocked"
+  color: "000000"
+  description: "Waiting on external dependency or another issue"
+
+- name: "status: PR welcome"
+  color: "c2e0c6"
+  description: "Solution clear; open for community pull requests"
+
+- name: "priority: critical"
+  color: "b60205"
+  description: "Blocking releases, production outage, severe bug"
+
+- name: "priority: high"
+  color: "d93f0b"
+  description: "Major impact, needed for upcoming milestone"
+
+- name: "priority: medium"
+  color: "fbca04"
+  description: "Normal priority, scheduled work"
+
+- name: "priority: low"
+  color: "0e8a16"
+  description: "Nice-to-have, low impact"
+
+- name: "good first issue"
+  color: "7057ff"
+  description: "Good for newcomers to the codebase"
+
+- name: "help wanted"
+  color: "008672"
+  description: "Extra attention or domain expertise needed"
