@@ -34,6 +34,5 @@ jobs:
             npx github-label-sync \
               --access-token "$GH_TOKEN" \
               --labels .github/labels.yml \
-              --no-allow-added-labels \
               "${ORG_NAME}/${REPO}"
           done
