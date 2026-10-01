@@ -1,38 +1,44 @@
-name: Sync Labels Across Repositories
+name: Sync org labels
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/labels.yml"
-      - ".github/workflows/label-sync.yml"
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Print changes without applying them
+        type: boolean
+        default: true
+      prune:
+        description: Delete labels that aren't in labels.yml (removes them from issues)
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - labels.yml
+      - scripts/sync-labels.sh
+  schedule:
+    - cron: "0 6 * * 1" # weekly, picks up newly created repos
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-labels
+  cancel-in-progress: false
 
 jobs:
-  label-sync:
+  sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Sync labels to public repositories
+      - name: Sync labels to all repositories
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ORG_NAME: twext
-        run: |
-          # Fetch all public, unarchived repository names
-          REPOS=$(gh api --paginate "orgs/${ORG_NAME}/repos?type=public" --jq '.[] | select(.archived == false) | .name')
-
-          for REPO in $REPOS; do
-            echo "Syncing labels for public repository: ${REPO}..."
-            npx github-label-sync \
-              --access-token "$GH_TOKEN" \
-              --labels .github/labels.yml \
-              "${ORG_NAME}/${REPO}"
-          done
+          # The default GITHUB_TOKEN can't touch other repos. Use a PAT or a GitHub App token.
+          GH_TOKEN: ${{ secrets.ORG_LABELS_TOKEN }}
+          ORG: ${{ github.repository_owner }}
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+          PRUNE: ${{ inputs.prune || 'false' }}
+          EXCLUDE: ${{ vars.LABEL_SYNC_EXCLUDE }}
+        run: ./scripts/sync-labels.sh "$ORG" labels.yml

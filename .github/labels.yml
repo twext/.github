@@ -1,83 +1,307 @@
-- name: "type: bug"
-  color: "d73a4a"
-  description: "Something isn't working or throwing uncaught exceptions"
+# Source of truth for org-wide issue labels.
+# Colors are hex without "#". Descriptions must be <= 100 characters.
 
-- name: "type: feature"
-  color: "a2eeef"
-  description: "New functionality or feature request"
+# Existing label -> new name. Renaming (instead of delete + create) keeps the
+# label attached to existing issues and PRs. Only applied when the old label
+# exists and the new one doesn't.
+renames:
+  bug: "type: bug"
+  enhancement: "type: enhancement"
+  documentation: "type: docs"
+  question: "type: question"
+  duplicate: "resolution: duplicate"
+  invalid: "resolution: invalid"
+  wontfix: "resolution: wontfix"
 
-- name: "type: enhancement"
-  color: "84b6eb"
-  description: "Improvement to existing feature or performance"
+labels:
+  # Type
+  - {
+      name: "type: bug",
+      color: "d73a4a",
+      description: "Something isn't working as expected",
+    }
+  - {
+      name: "type: feature",
+      color: "0e8a16",
+      description: "New functionality or capability",
+    }
+  - {
+      name: "type: enhancement",
+      color: "a2eeef",
+      description: "Improvement to existing functionality",
+    }
+  - {
+      name: "type: docs",
+      color: "0075ca",
+      description: "Documentation changes or additions",
+    }
+  - {
+      name: "type: refactor",
+      color: "fbca04",
+      description: "Code change with no behavior change",
+    }
+  - {
+      name: "type: chore",
+      color: "ededed",
+      description: "Maintenance, tooling, or housekeeping",
+    }
+  - {
+      name: "type: question",
+      color: "d876e3",
+      description: "Usage question or request for clarification",
+    }
+  - {
+      name: "type: security",
+      color: "b60205",
+      description: "Security vulnerability or hardening",
+    }
+  - {
+      name: "type: performance",
+      color: "f9a825",
+      description: "Speed, memory, or resource improvements",
+    }
+  - {
+      name: "type: test",
+      color: "c5def5",
+      description: "Test coverage or test infrastructure",
+    }
 
-- name: "type: refactor"
-  color: "7057ff"
-  description: "Code restructuring without changing functional behavior"
+  # Priority
+  - {
+      name: "priority: critical",
+      color: "b60205",
+      description: "Drop everything; production-breaking or security-critical",
+    }
+  - {
+      name: "priority: high",
+      color: "d93f0b",
+      description: "Should be addressed in the current cycle",
+    }
+  - {
+      name: "priority: medium",
+      color: "fbca04",
+      description: "Normal priority",
+    }
+  - {
+      name: "priority: low",
+      color: "c2e0c6",
+      description: "Nice to have, address when time allows",
+    }
 
-- name: "type: docs"
-  color: "0075ca"
-  description: "Documentation updates, README, or JSDoc improvements"
+  # Status
+  - {
+      name: "status: needs triage",
+      color: "ededed",
+      description: "Not yet reviewed by a maintainer",
+    }
+  - {
+      name: "status: needs info",
+      color: "fef2c0",
+      description: "Waiting on more details from the reporter",
+    }
+  - {
+      name: "status: needs reproduction",
+      color: "fef2c0",
+      description: "Needs a minimal repro case",
+    }
+  - {
+      name: "status: confirmed",
+      color: "0e8a16",
+      description: "Verified and accepted",
+    }
+  - {
+      name: "status: in progress",
+      color: "1d76db",
+      description: "Actively being worked on",
+    }
+  - {
+      name: "status: blocked",
+      color: "b60205",
+      description: "Waiting on another issue, PR, or external party",
+    }
+  - {
+      name: "status: stale",
+      color: "cfd3d7",
+      description: "No activity; may be closed automatically",
+    }
 
-- name: "type: security"
-  color: "b60205"
-  description: "Vulnerability reports, audit findings, or security fixes"
+  # Resolution
+  - {
+      name: "resolution: duplicate",
+      color: "cfd3d7",
+      description: "Already reported elsewhere",
+    }
+  - {
+      name: "resolution: wontfix",
+      color: "ffffff",
+      description: "Will not be worked on",
+    }
+  - {
+      name: "resolution: invalid",
+      color: "e4e669",
+      description: "Not a valid issue",
+    }
+  - {
+      name: "resolution: works as intended",
+      color: "cfd3d7",
+      description: "Behavior is expected",
+    }
 
-- name: "domain: node"
-  color: "027300"
-  description: "Node.js runtime, event loop, async, or V8 issues"
+  # Area: Node.js / npm
+  - {
+      name: "area: npm",
+      color: "cb3837",
+      description: "npm publishing, registry, or package.json concerns",
+    }
+  - {
+      name: "area: dependencies",
+      color: "0366d6",
+      description: "Dependency updates or conflicts",
+    }
+  - {
+      name: "area: node-version",
+      color: "68a063",
+      description: "Node.js version compatibility or support",
+    }
+  - {
+      name: "area: esm/cjs",
+      color: "f1e05a",
+      description: "ES module / CommonJS interop issues",
+    }
+  - {
+      name: "area: typescript",
+      color: "3178c6",
+      description: "Type definitions or TS compatibility",
+    }
+  - {
+      name: "area: build",
+      color: "5319e7",
+      description: "Bundling, transpiling, or build tooling",
+    }
+  - {
+      name: "area: cli",
+      color: "006b75",
+      description: "Command-line interface behavior",
+    }
+  - {
+      name: "area: api",
+      color: "1d76db",
+      description: "Public API surface or contracts",
+    }
+  - {
+      name: "area: lockfile",
+      color: "bfd4f2",
+      description: "package-lock / lockfile issues",
+    }
 
-- name: "domain: npm"
-  color: "cb3837"
-  description: "Package dependencies, scripts, lockfiles, or publishing"
+  # Docker
+  - {
+      name: "docker: image",
+      color: "0db7ed",
+      description: "Image contents, size, or base image choice",
+    }
+  - {
+      name: "docker: dockerfile",
+      color: "0db7ed",
+      description: "Dockerfile changes or best practices",
+    }
+  - {
+      name: "docker: compose",
+      color: "0db7ed",
+      description: "docker-compose configuration",
+    }
+  - {
+      name: "docker: registry",
+      color: "0db7ed",
+      description: "Publishing or pulling from a container registry",
+    }
+  - {
+      name: "docker: multi-arch",
+      color: "0db7ed",
+      description: "amd64/arm64 or other platform support",
+    }
+  - {
+      name: "docker: networking",
+      color: "0db7ed",
+      description: "Ports, networks, or container connectivity",
+    }
+  - {
+      name: "docker: volumes",
+      color: "0db7ed",
+      description: "Volumes, bind mounts, or persistence",
+    }
+  - {
+      name: "docker: env/config",
+      color: "0db7ed",
+      description: "Environment variables and runtime configuration",
+    }
 
-- name: "domain: docker"
-  color: "1d63ed"
-  description: "Dockerfile, container runtime, compose, or image builds"
+  # CI/CD & Release
+  - {
+      name: "ci: github actions",
+      color: "2088ff",
+      description: "Workflow or Actions failures and changes",
+    }
+  - {
+      name: "ci: flaky test",
+      color: "e99695",
+      description: "Intermittent test failures",
+    }
+  - {
+      name: "release: breaking change",
+      color: "b60205",
+      description: "Requires a major version bump",
+    }
+  - {
+      name: "release: needs changelog",
+      color: "fbca04",
+      description: "Changelog entry required before release",
+    }
+  - {
+      name: "release: backport",
+      color: "5319e7",
+      description: "Should be applied to a maintenance branch",
+    }
+  - {
+      name: "release: semver-patch",
+      color: "c2e0c6",
+      description: "Patch-level change",
+    }
+  - {
+      name: "release: semver-minor",
+      color: "7fdbb6",
+      description: "Minor-level change",
+    }
+  - {
+      name: "release: semver-major",
+      color: "d93f0b",
+      description: "Major-level change",
+    }
 
-- name: "domain: ci/cd"
-  color: "5319e7"
-  description: "GitHub Actions, build pipelines, or release automation"
+  # Community & Effort
+  - {
+      name: "good first issue",
+      color: "7057ff",
+      description: "Good for newcomers",
+    }
+  - {
+      name: "help wanted",
+      color: "008672",
+      description: "Extra attention or contributors needed",
+    }
+  - {
+      name: "effort: small",
+      color: "c2e0c6",
+      description: "Roughly under a day",
+    }
+  - { name: "effort: medium", color: "fbca04", description: "A few days" }
+  - {
+      name: "effort: large",
+      color: "d93f0b",
+      description: "A week or more; consider splitting",
+    }
 
-- name: "domain: config"
-  color: "fbca04"
-  description: "Environment variables, .env, or build tool config"
-
-- name: "status: triage"
-  color: "fef2c0"
-  description: "Needs initial review or investigation"
-
-- name: "status: needs-repro"
-  color: "d4c5f9"
-  description: "Awaiting reproducible sample or minimal repo"
-
-- name: "status: blocked"
-  color: "000000"
-  description: "Waiting on external dependency or another issue"
-
-- name: "status: PR welcome"
-  color: "c2e0c6"
-  description: "Solution clear; open for community pull requests"
-
-- name: "priority: critical"
-  color: "b60205"
-  description: "Blocking releases, production outage, severe bug"
-
-- name: "priority: high"
-  color: "d93f0b"
-  description: "Major impact, needed for upcoming milestone"
-
-- name: "priority: medium"
-  color: "fbca04"
-  description: "Normal priority, scheduled work"
-
-- name: "priority: low"
-  color: "0e8a16"
-  description: "Nice-to-have, low impact"
-
-- name: "good first issue"
-  color: "7057ff"
-  description: "Good for newcomers to the codebase"
-
-- name: "help wanted"
-  color: "008672"
-  description: "Extra attention or domain expertise needed"
+  # Platform
+  - { name: "os: linux", color: "fcc624", description: "Linux-specific" }
+  - { name: "os: macos", color: "999999", description: "macOS-specific" }
+  - { name: "os: windows", color: "0078d6", description: "Windows-specific" }
